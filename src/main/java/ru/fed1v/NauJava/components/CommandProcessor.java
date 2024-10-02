@@ -1,4 +1,4 @@
-package ru.fed1v.NauJava.controller;
+package ru.fed1v.NauJava.components;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

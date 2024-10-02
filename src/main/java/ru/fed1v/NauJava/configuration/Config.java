@@ -4,7 +4,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import ru.fed1v.NauJava.controller.CommandProcessor;
+import ru.fed1v.NauJava.components.CommandProcessor;
 import ru.fed1v.NauJava.entity.Food;
 import ru.fed1v.NauJava.repository.FoodRepository;
 import ru.fed1v.NauJava.service.FoodService;

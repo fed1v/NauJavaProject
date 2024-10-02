@@ -3,7 +3,6 @@ package ru.fed1v.NauJava.components;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import ru.fed1v.NauJava.controller.CommandProcessor;
 
 import java.util.Scanner;
 
@@ -21,12 +20,14 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     public void run(String... args) {
         System.out.println("Run");
 
-        System.out.println("Syntax: \n" +
-                "> add foodId foodName foodKcal\n" +
-                "> get id\n" +
-                "> getAll\n" +
-                "> update id foodName foodKcal\n" +
-                "> delete id\n"
+        System.out.println("""
+                Syntax:\s
+                > add foodId foodName foodKcal
+                > get id
+                > getAll
+                > update id foodName foodKcal
+                > delete id
+                """
         );
         
         try (Scanner scanner = new Scanner(System.in)) {
