@@ -1,39 +1,48 @@
 package ru.fed1v.NauJava.entity;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
 /**
  * Пищевая ценность продукта: белки, жиры, углеводы, калории
  */
+@Entity
 public class NutritionalValue {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     /**
      * Количество граммов белка в 100 граммах продукта
      */
+    @Column
     private Double proteinPer100g;
 
     /**
      * Количество граммов углеводов в 100 граммах продукта
      */
+    @Column
     private Double carbohydratePer100g;
 
     /**
      * Количество граммов жира в 100 граммах продукта
      */
+    @Column
     private Double fatPer100g;
 
     /**
      * Количество ккал в 100 граммах продукта
      */
+    @Column
     private Double kcalPer100g;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private Food food;
 
 
-    public NutritionalValue(Long id, double proteinPer100g, double carbohydratePer100g, double fatPer100g) {
-        this.id = id;
+    public NutritionalValue(double proteinPer100g, double carbohydratePer100g, double fatPer100g) {
         this.proteinPer100g = proteinPer100g;
         this.carbohydratePer100g = carbohydratePer100g;
         this.fatPer100g = fatPer100g;
@@ -42,6 +51,10 @@ public class NutritionalValue {
     public NutritionalValue(Long id, double kcalPer100g) {
         this.id = id;
         this.kcalPer100g = kcalPer100g;
+    }
+
+    public NutritionalValue() {
+        
     }
 
     public Long getId() {

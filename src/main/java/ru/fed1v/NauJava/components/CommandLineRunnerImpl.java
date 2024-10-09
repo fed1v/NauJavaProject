@@ -22,11 +22,15 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
         System.out.println("""
                 Syntax:\s
-                > add foodId foodName foodKcal
-                > get id
-                > getAll
-                > update id foodName foodKcal
-                > delete id
+                > add foodName kcal
+                > getFood id
+                > getNutr id
+                > getAllFood
+                > getAllNutr
+                > updateFood id foodName
+                > updateNutr id kcal
+                > deleteFood id
+                > deleteNutr id
                 """
         );
         

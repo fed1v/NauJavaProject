@@ -1,22 +1,38 @@
 package ru.fed1v.NauJava.entity;
 
+import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.Objects;
 
+@Entity
 public class Food {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
+
+    @Column
     private String name;
+
+    @Column
     private String description;
+
+    @Column
     private Double price;
-    
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private NutritionalValue nutritionalValue;
 
-    public Food(Long id, String name, String description, Double price, NutritionalValue nutritionalValue) {
-        this.id = id;
+    public Food(String name, String description, Double price) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.nutritionalValue = nutritionalValue;
+    }
+
+    public Food() {
     }
 
     public Long getId() {
