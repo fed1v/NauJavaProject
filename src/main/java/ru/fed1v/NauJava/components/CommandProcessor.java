@@ -76,7 +76,7 @@ public class CommandProcessor {
         String foodName = inputSplited[2];
         double calories = Double.parseDouble(inputSplited[3]);
 
-        NutritionalValue nutritionalValue = new NutritionalValue(calories);
-        return new Food(foodId, foodName, nutritionalValue);
+        NutritionalValue nutritionalValue = new NutritionalValue(1L, calories);
+        return new Food(foodId, foodName, "description", 123.0, nutritionalValue);
     }
 }

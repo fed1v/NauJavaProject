@@ -2,21 +2,21 @@ package ru.fed1v.NauJava.entity;
 
 import java.util.Objects;
 
-public class Food {
+public class Dish {
     private Long id;
     
     private String name;
     private String description;
-    private Double price;
+    private Double gramsWeight;
     
-    private NutritionalValue nutritionalValue;
+    private Food food;
 
-    public Food(Long id, String name, String description, Double price, NutritionalValue nutritionalValue) {
+    public Dish(Long id, String name, String description, Double gramsWeight, Food food) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.price = price;
-        this.nutritionalValue = nutritionalValue;
+        this.gramsWeight = gramsWeight;
+        this.food = food;
     }
 
     public Long getId() {
@@ -43,43 +43,43 @@ public class Food {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getGramsWeight() {
+        return gramsWeight;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setGramsWeight(Double gramsWeight) {
+        this.gramsWeight = gramsWeight;
     }
 
-    public NutritionalValue getNutritionalValue() {
-        return nutritionalValue;
+    public Food getFood() {
+        return food;
     }
 
-    public void setNutritionalValue(NutritionalValue nutritionalValue) {
-        this.nutritionalValue = nutritionalValue;
+    public void setFood(Food food) {
+        this.food = food;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Food food = (Food) o;
-        return Objects.equals(id, food.id) && Objects.equals(name, food.name) && Objects.equals(description, food.description) && Objects.equals(price, food.price) && Objects.equals(nutritionalValue, food.nutritionalValue);
+        Dish dish = (Dish) o;
+        return Objects.equals(id, dish.id) && Objects.equals(name, dish.name) && Objects.equals(description, dish.description) && Objects.equals(gramsWeight, dish.gramsWeight) && Objects.equals(food, dish.food);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, price, nutritionalValue);
+        return Objects.hash(id, name, description, gramsWeight, food);
     }
 
     @Override
     public String toString() {
-        return "Food{" +
+        return "Dish{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", price=" + price +
-                ", nutritionalValue=" + nutritionalValue +
+                ", gramsWeight=" + gramsWeight +
+                ", food=" + food +
                 '}';
     }
 }
