@@ -1,6 +1,8 @@
 package ru.fed1v.NauJava.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Objects;
 
@@ -38,7 +40,7 @@ public class NutritionalValue {
     @Column
     private Double kcalPer100g;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL/*, mappedBy = "nutritionalValue"*/)
     private Food food;
 
 
@@ -54,7 +56,7 @@ public class NutritionalValue {
     }
 
     public NutritionalValue() {
-        
+
     }
 
     public Long getId() {
@@ -110,12 +112,16 @@ public class NutritionalValue {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NutritionalValue that = (NutritionalValue) o;
-        return Objects.equals(id, that.id) && Objects.equals(proteinPer100g, that.proteinPer100g) && Objects.equals(carbohydratePer100g, that.carbohydratePer100g) && Objects.equals(fatPer100g, that.fatPer100g) && Objects.equals(kcalPer100g, that.kcalPer100g) && Objects.equals(food, that.food);
+        return Objects.equals(id, that.id) 
+                && Objects.equals(proteinPer100g, that.proteinPer100g) 
+                && Objects.equals(carbohydratePer100g, that.carbohydratePer100g) 
+                && Objects.equals(fatPer100g, that.fatPer100g) 
+                && Objects.equals(kcalPer100g, that.kcalPer100g);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, proteinPer100g, carbohydratePer100g, fatPer100g, kcalPer100g, food);
+        return Objects.hash(id, proteinPer100g, carbohydratePer100g, fatPer100g, kcalPer100g);
     }
 
     @Override
@@ -126,7 +132,7 @@ public class NutritionalValue {
                 ", carbohydratePer100g=" + carbohydratePer100g +
                 ", fatPer100g=" + fatPer100g +
                 ", kcalPer100g=" + kcalPer100g +
-                ", food=" + food +
+                ", food=" + food.getId() +
                 '}';
     }
 }

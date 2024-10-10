@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 import ru.fed1v.NauJava.entity.Food;
 import ru.fed1v.NauJava.entity.NutritionalValue;
 import ru.fed1v.NauJava.repository.FoodRepository;
@@ -27,9 +29,9 @@ public class FoodTest {
     @Test
     public void testFindFoodById() {
         NutritionalValue nutritionalValue = new NutritionalValue(20.5, 15.3, 12.1);
-        Food food = new Food("Rice", "Tasty", 100.0);
-        food.setNutritionalValue(nutritionalValue);
-
+        Food food = new Food("Rice", "Tasty", 100.0, nutritionalValue);
+        nutritionalValue.setFood(food);
+        
         Food savedFood = foodRepository.save(food);
         Optional<Food> foundFood = foodRepository.findById(savedFood.getId());
 
@@ -40,10 +42,9 @@ public class FoodTest {
     @Test
     public void testNutritionalValueInsertedWhenInsertFood() {
         NutritionalValue nutritionalValue = new NutritionalValue(20.0, 15.3, 9.8);
-
-        Food food = new Food("Rice", "description", 123.0);
-        food.setNutritionalValue(nutritionalValue);
-
+        Food food = new Food("Rice", "description", 123.0, nutritionalValue);
+        nutritionalValue.setFood(food);
+        
         Food savedFood = foodRepository.save(food);
 
         Optional<NutritionalValue> nutritionalValueFromRepo = nutritionalValueRepository
@@ -54,10 +55,12 @@ public class FoodTest {
     }
 
     @Test
+    @Transactional
+    @Commit
     public void testDeleteNutritionalValueWhenDeleteFood() {
         NutritionalValue nutritionalValue = new NutritionalValue(20.0, 15.3, 9.8);
-        Food food = new Food("Rice", "description", 123.0);
-        food.setNutritionalValue(nutritionalValue);
+        Food food = new Food("Rice", "description", 123.0, nutritionalValue);
+        nutritionalValue.setFood(food);
 
         foodRepository.save(food);
 
@@ -70,19 +73,5 @@ public class FoodTest {
         foodRepository.deleteById(food.getId());
         
         Assertions.assertFalse(nutritionalValueRepository.existsById(nutritionalValue.getId()));
-    }
-
-    @Test
-    public void testRestrictDeleteNutritionalValue(){
-        NutritionalValue nutritionalValue = new NutritionalValue(20.0, 15.3, 9.8);
-
-        Food food = new Food("Rice", "description", 123.0);
-        food.setNutritionalValue(nutritionalValue);
-
-        foodRepository.save(food);
-        
-        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            nutritionalValueRepository.deleteById(nutritionalValue.getId());
-        });
     }
 }

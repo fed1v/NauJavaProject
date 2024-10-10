@@ -1,8 +1,6 @@
 package ru.fed1v.NauJava.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Objects;
 
@@ -23,13 +21,13 @@ public class Food {
     private Double price;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private NutritionalValue nutritionalValue;
 
-    public Food(String name, String description, Double price) {
+    public Food(String name, String description, Double price, NutritionalValue nutritionalValue) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.nutritionalValue = nutritionalValue;
     }
 
     public Food() {
@@ -80,7 +78,11 @@ public class Food {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Food food = (Food) o;
-        return Objects.equals(id, food.id) && Objects.equals(name, food.name) && Objects.equals(description, food.description) && Objects.equals(price, food.price) && Objects.equals(nutritionalValue, food.nutritionalValue);
+        return Objects.equals(id, food.id) 
+                && Objects.equals(name, food.name) 
+                && Objects.equals(description, food.description) 
+                && Objects.equals(price, food.price) 
+                && Objects.equals(nutritionalValue, food.nutritionalValue);
     }
 
     @Override

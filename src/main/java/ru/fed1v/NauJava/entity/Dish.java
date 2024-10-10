@@ -1,22 +1,31 @@
 package ru.fed1v.NauJava.entity;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
 public class Dish {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     
     private String name;
     private String description;
     private Double gramsWeight;
     
+    @OneToOne(cascade = CascadeType.ALL)
     private Food food;
 
-    public Dish(Long id, String name, String description, Double gramsWeight, Food food) {
-        this.id = id;
+    public Dish(String name, String description, Double gramsWeight, Food food) {
         this.name = name;
         this.description = description;
         this.gramsWeight = gramsWeight;
         this.food = food;
+    }
+
+    public Dish() {
     }
 
     public Long getId() {
@@ -64,12 +73,15 @@ public class Dish {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dish dish = (Dish) o;
-        return Objects.equals(id, dish.id) && Objects.equals(name, dish.name) && Objects.equals(description, dish.description) && Objects.equals(gramsWeight, dish.gramsWeight) && Objects.equals(food, dish.food);
+        return Objects.equals(id, dish.id) 
+                && Objects.equals(name, dish.name)
+                && Objects.equals(description, dish.description)
+                && Objects.equals(gramsWeight, dish.gramsWeight);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, gramsWeight, food);
+        return Objects.hash(id, name, description, gramsWeight);
     }
 
     @Override

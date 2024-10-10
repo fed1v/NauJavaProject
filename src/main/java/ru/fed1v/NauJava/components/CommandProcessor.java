@@ -109,8 +109,7 @@ public class CommandProcessor {
         double calories = Double.parseDouble(inputSplited[2]);
         
         NutritionalValue nutritionalValue = new NutritionalValue(null, calories);
-        Food food = new Food(foodName, "description", 123.0);
-        food.setNutritionalValue(nutritionalValue);
+        Food food = new Food(foodName, "description", 123.0, nutritionalValue);
         
         return food;
     }

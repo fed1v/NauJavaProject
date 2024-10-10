@@ -1,24 +1,33 @@
 package ru.fed1v.NauJava.entity;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 import java.util.Objects;
 
-public class User {
+@Entity
+public class AppUser {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     
     private String name;
     private Integer age;
+    
     private Gender gender;
     
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Meal> meals;
 
-    public User(Long id, String name, Integer age, Gender gender, List<Meal> meals) {
-        this.id = id;
+    public AppUser(String name, Integer age, Gender gender, List<Meal> meals) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.meals = meals;
+    }
+
+    public AppUser() {
     }
 
     public Long getId() {
@@ -65,8 +74,12 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(age, user.age) && gender == user.gender && Objects.equals(meals, user.meals);
+        AppUser user = (AppUser) o;
+        return Objects.equals(id, user.id) 
+                && Objects.equals(name, user.name) 
+                && Objects.equals(age, user.age) 
+                && gender == user.gender 
+                && Objects.equals(meals, user.meals);
     }
 
     @Override
@@ -84,9 +97,10 @@ public class User {
                 ", meals=" + meals +
                 '}';
     }
+    
+    public enum Gender{
+        MALE,
+        FEMALE
+    }
 }
 
-enum Gender{
-    MALE,
-    FEMALE
-}
