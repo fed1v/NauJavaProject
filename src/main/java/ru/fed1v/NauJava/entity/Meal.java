@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 public class Meal {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -16,10 +16,14 @@ public class Meal {
     private String description;
     private Type type;
     private LocalDateTime dateTime;
-    
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "meal"
+    )
     private List<Dish> dishes;
-    
+
     public Meal(String description, Type type, LocalDateTime dateTime, List<Dish> dishes) {
         this.description = description;
         this.type = type;
@@ -28,7 +32,7 @@ public class Meal {
     }
 
     public Meal() {
-        
+
     }
 
     public Long getId() {
@@ -76,11 +80,11 @@ public class Meal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Meal meal = (Meal) o;
-        return Objects.equals(id, meal.id) 
-                && Objects.equals(description, meal.description) 
-                && type == meal.type 
+        return Objects.equals(id, meal.id)
+                && Objects.equals(description, meal.description)
+                && type == meal.type
                 && Objects.equals(dateTime, meal.dateTime)
-                && Objects.equals(dishes, meal.dishes) ;
+                && Objects.equals(dishes, meal.dishes);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package ru.fed1v.NauJava.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Objects;
 
@@ -40,7 +38,7 @@ public class NutritionalValue {
     @Column
     private Double kcalPer100g;
 
-    @OneToOne(cascade = CascadeType.ALL/*, mappedBy = "nutritionalValue"*/)
+    @OneToOne(cascade = CascadeType.ALL)
     private Food food;
 
 
@@ -48,6 +46,7 @@ public class NutritionalValue {
         this.proteinPer100g = proteinPer100g;
         this.carbohydratePer100g = carbohydratePer100g;
         this.fatPer100g = fatPer100g;
+        kcalPer100g = 9 * fatPer100g + 4 * proteinPer100g + 4 * carbohydratePer100g;
     }
 
     public NutritionalValue(Long id, double kcalPer100g) {

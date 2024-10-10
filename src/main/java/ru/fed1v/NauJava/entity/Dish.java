@@ -18,6 +18,10 @@ public class Dish {
     @OneToOne(cascade = CascadeType.ALL)
     private Food food;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "meal_id")
+    private Meal meal;
+    
     public Dish(String name, String description, Double gramsWeight, Food food) {
         this.name = name;
         this.description = description;
@@ -66,6 +70,14 @@ public class Dish {
 
     public void setFood(Food food) {
         this.food = food;
+    }
+
+    public Meal getMeal() {
+        return meal;
+    }
+
+    public void setMeal(Meal meal) {
+        this.meal = meal;
     }
 
     @Override
