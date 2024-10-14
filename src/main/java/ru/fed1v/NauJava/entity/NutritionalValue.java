@@ -1,5 +1,6 @@
 package ru.fed1v.NauJava.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -39,6 +40,7 @@ public class NutritionalValue {
     private Double kcalPer100g;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     private Food food;
 
 

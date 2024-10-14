@@ -1,5 +1,6 @@
 package ru.fed1v.NauJava.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class Food {
     private Double price;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private NutritionalValue nutritionalValue;
 
     public Food(String name, String description, Double price, NutritionalValue nutritionalValue) {

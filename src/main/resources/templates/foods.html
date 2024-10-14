@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Foods</title>
+</head>
+<body>
+<h1>Foods list</h1>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Kcal</th>
+        <th>Protein</th>
+        <th>Fat</th>
+        <th>Carbohydrate</th>
+    </tr>
+    <tr th:each="food : ${foods}">
+        <td th:text="${food.id}"/>
+        <td>
+            <a th:href="@{/foods/{id}(id=${food.id})}" th:text="${food.name}"></a>
+        </td>
+        <td th:text="${food.nutritionalValue.kcalPer100g.intValue()}"></td>
+        <td th:text="${food.nutritionalValue.proteinPer100g.intValue()}"></td>
+        <td th:text="${food.nutritionalValue.fatPer100g.intValue()}"></td>
+        <td th:text="${food.nutritionalValue.carbohydratePer100g.intValue()}"></td>
+    </tr>
+</table>
+</body>
+</html>
