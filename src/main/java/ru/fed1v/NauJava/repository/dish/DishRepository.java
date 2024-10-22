@@ -1,4 +1,4 @@
-package ru.fed1v.NauJava.repository;
+package ru.fed1v.NauJava.repository.dish;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

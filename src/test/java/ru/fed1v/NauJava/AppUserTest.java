@@ -8,9 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fed1v.NauJava.entity.*;
-import ru.fed1v.NauJava.repository.AppUserRepositoryCustom;
-import ru.fed1v.NauJava.repository.MealRepository;
-import ru.fed1v.NauJava.repository.AppUserRepository;
+import ru.fed1v.NauJava.repository.app_user.AppUserRepositoryCustom;
+import ru.fed1v.NauJava.repository.meal.MealRepository;
+import ru.fed1v.NauJava.repository.app_user.AppUserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

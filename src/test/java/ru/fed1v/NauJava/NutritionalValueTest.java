@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.fed1v.NauJava.entity.NutritionalValue;
-import ru.fed1v.NauJava.repository.NutritionalValueRepository;
+import ru.fed1v.NauJava.repository.nutritional_value.NutritionalValueRepository;
 
 import java.util.Optional;
 

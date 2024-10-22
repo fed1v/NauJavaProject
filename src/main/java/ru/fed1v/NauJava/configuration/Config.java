@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import ru.fed1v.NauJava.components.CommandProcessor;
 import ru.fed1v.NauJava.entity.Food;
-import ru.fed1v.NauJava.service.FoodService;
-import ru.fed1v.NauJava.service.NutritionalValueService;
+import ru.fed1v.NauJava.service.food.FoodService;
+import ru.fed1v.NauJava.service.nutritional_value.NutritionalValueService;
 
 import java.util.ArrayList;
 import java.util.List;

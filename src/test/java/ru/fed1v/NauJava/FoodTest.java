@@ -4,13 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fed1v.NauJava.entity.Food;
 import ru.fed1v.NauJava.entity.NutritionalValue;
-import ru.fed1v.NauJava.repository.FoodRepository;
-import ru.fed1v.NauJava.repository.NutritionalValueRepository;
+import ru.fed1v.NauJava.repository.food.FoodRepository;
+import ru.fed1v.NauJava.repository.nutritional_value.NutritionalValueRepository;
 
 import java.util.Optional;
 

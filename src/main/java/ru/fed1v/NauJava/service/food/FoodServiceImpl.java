@@ -1,10 +1,9 @@
-package ru.fed1v.NauJava.service;
+package ru.fed1v.NauJava.service.food;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.fed1v.NauJava.entity.Food;
-import ru.fed1v.NauJava.repository.FoodRepository;
-import ru.fed1v.NauJava.repository.FoodRepositoryImpl;
+import ru.fed1v.NauJava.repository.food.FoodRepository;
 
 import java.util.ArrayList;
 import java.util.List;

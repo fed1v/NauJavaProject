@@ -10,9 +10,9 @@ import ru.fed1v.NauJava.entity.Dish;
 import ru.fed1v.NauJava.entity.Food;
 import ru.fed1v.NauJava.entity.Meal;
 import ru.fed1v.NauJava.entity.NutritionalValue;
-import ru.fed1v.NauJava.repository.DishRepository;
-import ru.fed1v.NauJava.repository.MealRepository;
-import ru.fed1v.NauJava.service.MealService;
+import ru.fed1v.NauJava.repository.dish.DishRepository;
+import ru.fed1v.NauJava.repository.meal.MealRepository;
+import ru.fed1v.NauJava.service.meal.MealService;
 
 import java.time.LocalDateTime;
 import java.util.List;

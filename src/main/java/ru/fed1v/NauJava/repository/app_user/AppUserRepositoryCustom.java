@@ -1,4 +1,4 @@
-package ru.fed1v.NauJava.repository;
+package ru.fed1v.NauJava.repository.app_user;
 
 import ru.fed1v.NauJava.entity.AppUser;
 

@@ -1,9 +1,9 @@
-package ru.fed1v.NauJava.service;
+package ru.fed1v.NauJava.service.dish;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.fed1v.NauJava.entity.Dish;
-import ru.fed1v.NauJava.repository.DishRepository;
+import ru.fed1v.NauJava.repository.dish.DishRepository;
 
 import java.util.ArrayList;
 import java.util.List;

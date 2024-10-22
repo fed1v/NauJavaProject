@@ -1,4 +1,4 @@
-package ru.fed1v.NauJava.service;
+package ru.fed1v.NauJava.service.food;
 
 import ru.fed1v.NauJava.entity.Food;
 

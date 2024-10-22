@@ -1,8 +1,9 @@
-package ru.fed1v.NauJava.repository;
+package ru.fed1v.NauJava.repository.food;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fed1v.NauJava.entity.Food;
+import ru.fed1v.NauJava.repository.CrudRepository;
 
 import java.util.List;
 

@@ -1,10 +1,9 @@
-package ru.fed1v.NauJava.repository;
+package ru.fed1v.NauJava.repository.meal;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import ru.fed1v.NauJava.entity.Food;
+import ru.fed1v.NauJava.entity.Meal;
 
 @RepositoryRestResource
-public interface FoodRepository extends CrudRepository<Food, Long> {
-    
+public interface MealRepository extends CrudRepository<Meal, Long> {
 }

@@ -1,4 +1,4 @@
-package ru.fed1v.NauJava.service;
+package ru.fed1v.NauJava.service.meal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -8,8 +8,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import ru.fed1v.NauJava.entity.Dish;
 import ru.fed1v.NauJava.entity.Meal;
-import ru.fed1v.NauJava.repository.DishRepository;
-import ru.fed1v.NauJava.repository.MealRepository;
+import ru.fed1v.NauJava.repository.dish.DishRepository;
+import ru.fed1v.NauJava.repository.meal.MealRepository;
 
 import java.util.ArrayList;
 import java.util.List;

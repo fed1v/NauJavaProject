@@ -1,9 +1,9 @@
-package ru.fed1v.NauJava.service;
+package ru.fed1v.NauJava.service.nutritional_value;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.fed1v.NauJava.entity.NutritionalValue;
-import ru.fed1v.NauJava.repository.NutritionalValueRepository;
+import ru.fed1v.NauJava.repository.nutritional_value.NutritionalValueRepository;
 
 import java.util.ArrayList;
 import java.util.List;

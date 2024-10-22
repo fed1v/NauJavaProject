@@ -1,4 +1,4 @@
-package ru.fed1v.NauJava.repository;
+package ru.fed1v.NauJava.repository.app_user;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -7,7 +7,7 @@ import ru.fed1v.NauJava.entity.AppUser;
 
 import java.util.List;
 
-@RepositoryRestResource(exported = false)
+@RepositoryRestResource(path = "app_users")
 public interface AppUserRepository extends CrudRepository<AppUser, Long> {
 
     List<AppUser> findAppUsersByName(String name);

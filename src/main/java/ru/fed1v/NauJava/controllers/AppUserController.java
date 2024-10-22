@@ -6,20 +6,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fed1v.NauJava.entity.AppUser;
-import ru.fed1v.NauJava.repository.AppUserRepository;
+import ru.fed1v.NauJava.service.app_user.AppUserService;
 
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/users")
 public class AppUserController {
 
-    private final AppUserRepository appUserRepository;
+    private final AppUserService appUserService;
 
     @Autowired
-    public AppUserController(AppUserRepository appUserRepository) {
-        this.appUserRepository = appUserRepository;
+    public AppUserController(AppUserService appUserService) {
+        this.appUserService = appUserService;
     }
 
     @GetMapping
@@ -48,28 +47,27 @@ public class AppUserController {
     }
 
     private List<AppUser> getUsersWithNameAndAge(String name, Integer age) {
-        return appUserRepository
+        return appUserService
                 .findAppUsersByNameAndAge(name, age);
     }
 
     private List<AppUser> getUsersWithName(String name) {
-        return appUserRepository
+        return appUserService
                 .findAppUsersByName(name);
     }
 
     private List<AppUser> getUsersWithAge(Integer age) {
-        return appUserRepository
+        return appUserService
                 .findAppUsersByAge(age);
     }
 
     private List<AppUser> getAllUsers() {
-        return StreamSupport
-                .stream(appUserRepository.findAll().spliterator(), false)
-                .toList();
+        return appUserService
+                .findAll();
     }
 
     private List<AppUser> getUsersOlderThanAge(Integer olderThanAge) {
-        return appUserRepository
-                .findAppUsersByAgeGreaterThan(olderThanAge);
+        return appUserService
+                .findAppUsersOlderThan(olderThanAge);
     }
 }

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fed1v.NauJava.entity.Food;
 import ru.fed1v.NauJava.entity.NutritionalValue;
-import ru.fed1v.NauJava.service.FoodService;
-import ru.fed1v.NauJava.service.NutritionalValueService;
+import ru.fed1v.NauJava.service.food.FoodService;
+import ru.fed1v.NauJava.service.nutritional_value.NutritionalValueService;
 
 import java.util.List;
 

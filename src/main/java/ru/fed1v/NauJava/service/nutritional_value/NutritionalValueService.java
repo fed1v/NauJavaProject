@@ -1,4 +1,4 @@
-package ru.fed1v.NauJava.service;
+package ru.fed1v.NauJava.service.nutritional_value;
 
 import ru.fed1v.NauJava.entity.NutritionalValue;
 

@@ -1,6 +1,5 @@
-package ru.fed1v.NauJava.service;
+package ru.fed1v.NauJava.service.meal;
 
-import ru.fed1v.NauJava.entity.Food;
 import ru.fed1v.NauJava.entity.Meal;
 
 import java.util.List;
