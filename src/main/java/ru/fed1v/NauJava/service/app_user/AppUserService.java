@@ -14,7 +14,11 @@ public interface AppUserService {
 
     List<AppUser> findAppUsersByName(String name);
 
+    AppUser findAppUserByUsername(String username);
+    
     List<AppUser> findAppUsersByNameAndAge(String name, int age);
 
     List<AppUser> findAppUsersOlderThan(int age);
+    
+    void addAppUser(AppUser appUser);
 }

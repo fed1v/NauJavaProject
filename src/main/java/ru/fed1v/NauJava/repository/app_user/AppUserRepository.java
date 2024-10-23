@@ -12,6 +12,8 @@ public interface AppUserRepository extends CrudRepository<AppUser, Long> {
 
     List<AppUser> findAppUsersByName(String name);
 
+    AppUser findAppUserByUsername(String username);
+    
     List<AppUser> findAppUsersByAge(int age);
 
     List<AppUser> findAppUsersByAgeGreaterThan(int age);
