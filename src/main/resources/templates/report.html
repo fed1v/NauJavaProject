@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report</title>
+</head>
+<body>
+<div th:object="${reportContent}">
+    <div th:object="${report}">
+        <div style="display: flex; align-items: center; column-gap: 10px">
+            <b>Id: </b>
+            <p th:text="${report.getId()}"/>
+        </div>
+
+        <div style="display: flex; align-items: center; column-gap: 10px">
+            <b>Status: </b>
+            <p th:text="${report.getStatus()}"/>
+        </div>
+    </div>
+
+    <div style="display: flex; align-items: center; column-gap: 10px">
+        <b>Users: </b>
+        <p th:text="${reportContent.getUsersCount()}"/>
+    </div>
+
+    <div style="display: flex; align-items: center; column-gap: 10px">
+        <b>Time to count users: </b>
+        <p th:text="${reportContent.getTimeToCountUsers()}"/>
+        <p> ms </p>
+    </div>
+
+    <div style="display: flex; align-items: center; column-gap: 10px">
+        <b>Time to get foods: </b>
+        <p th:text="${reportContent.getTimeToGetFoods()}"/>
+        <p> ms </p>
+    </div>
+
+    <div style="display: flex; align-items: center; column-gap: 10px">
+        <b>Total time: </b>
+        <p th:text="${reportContent.getTotalTime()}"/>
+        <p> ms </p>
+    </div>
+
+    <h1>Foods list</h1>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Kcal</th>
+            <th>Protein</th>
+            <th>Fat</th>
+            <th>Carbohydrate</th>
+        </tr>
+        <tr th:each="food : ${reportContent.getFoodList()}">
+            <td th:text="${food.id}"/>
+            <td>
+                <a th:href="@{/foods/{id}(id=${food.id})}" th:text="${food.name}"></a>
+            </td>
+            <td th:text="${food.nutritionalValue.kcalPer100g.intValue()}"></td>
+            <td th:text="${food.nutritionalValue.proteinPer100g.intValue()}"></td>
+            <td th:text="${food.nutritionalValue.fatPer100g.intValue()}"></td>
+            <td th:text="${food.nutritionalValue.carbohydratePer100g.intValue()}"></td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>
