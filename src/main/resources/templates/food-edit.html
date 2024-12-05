@@ -43,21 +43,22 @@
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Белки</label>
                     <div class="col-sm-8">
-                        <input class="form-control" th:field="${food.nutritionalValue.proteinPer100g}"/>
+                        <input class="form-control" type="number" th:field="${food.nutritionalValue.proteinPer100g}"/>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Жиры</label>
                     <div class="col-sm-8">
-                        <input class="form-control" th:field="${food.nutritionalValue.fatPer100g}"/>
+                        <input class="form-control" type="number" th:field="${food.nutritionalValue.fatPer100g}"/>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Углеводы</label>
                     <div class="col-sm-8">
-                        <input class="form-control" th:field="${food.nutritionalValue.carbohydratePer100g}"/>
+                        <input class="form-control" type="number"
+                               th:field="${food.nutritionalValue.carbohydratePer100g}"/>
                     </div>
                 </div>
 

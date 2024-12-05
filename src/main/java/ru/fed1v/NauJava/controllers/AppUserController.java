@@ -1,6 +1,7 @@
 package ru.fed1v.NauJava.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,7 @@ public class AppUserController {
      * @return имя шаблона, отображающего пользователя
      */
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole(\"ADMIN\")")
     public String getUser(
             Model model,
             @PathVariable Long id
@@ -70,6 +72,7 @@ public class AppUserController {
      * @return перенаправляет на страницу с пользователями
      */
     @PostMapping("/{id}/delete")
+    @PreAuthorize("hasRole(\"ADMIN\")")
     public String deleteUser(
             @PathVariable Long id
     ) {
@@ -84,6 +87,7 @@ public class AppUserController {
      * @return перенаправляет на страницу с пользователями
      */
     @PostMapping("/{id}/ban")
+    @PreAuthorize("hasRole(\"ADMIN\")")
     public String banUser(
             @PathVariable Long id
     ) {
@@ -98,6 +102,7 @@ public class AppUserController {
      * @return перенаправляет на страницу с пользователями
      */
     @PostMapping("/{id}/unban")
+    @PreAuthorize("hasRole(\"ADMIN\")")
     public String unbanUser(
             @PathVariable Long id
     ) {
@@ -112,6 +117,7 @@ public class AppUserController {
      * @return перенаправляет на страницу с пользователями
      */
     @PostMapping("/{id}/makeAdmin")
+    @PreAuthorize("hasRole(\"ADMIN\")")
     public String makeAdmin(
             @PathVariable Long id
     ) {

@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-8 mx-auto rounded border p-4 m-4">
             <h2 class="text-center mb-5">Добавить продукт</h2>
-            
+
             <form method="post"
                   th:object="${food}"
                   th:action="@{/foods/create}"
@@ -36,28 +36,29 @@
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Цена</label>
                     <div class="col-sm-8">
-                        <input class="form-control" th:field="${food.price}"/>
+                        <input class="form-control" type="number" th:field="${food.price}"/>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Белки</label>
                     <div class="col-sm-8">
-                        <input class="form-control" th:field="${food.nutritionalValue.proteinPer100g}"/>
+                        <input class="form-control" type="number" th:field="${food.nutritionalValue.proteinPer100g}"/>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Жиры</label>
                     <div class="col-sm-8">
-                        <input class="form-control" th:field="${food.nutritionalValue.fatPer100g}"/>
+                        <input class="form-control" type="number" th:field="${food.nutritionalValue.fatPer100g}"/>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Углеводы</label>
                     <div class="col-sm-8">
-                        <input class="form-control" th:field="${food.nutritionalValue.carbohydratePer100g}"/>
+                        <input class="form-control" type="number"
+                               th:field="${food.nutritionalValue.carbohydratePer100g}"/>
                     </div>
                 </div>
 
@@ -75,9 +76,9 @@
                         </a>
                     </div>
                 </div>
-                
+
             </form>
-            
+
         </div>
     </div>
 </div>
