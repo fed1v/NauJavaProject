@@ -6,24 +6,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.fed1v.NauJava.entity.*;
-import ru.fed1v.NauJava.repository.app_user.AppUserRepositoryCustom;
 import ru.fed1v.NauJava.repository.meal.MealRepository;
 import ru.fed1v.NauJava.repository.app_user.AppUserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootTest
 public class AppUserTest {
 
     private final AppUserRepository userRepository;
-    private final AppUserRepositoryCustom userRepositoryCustom;
 
     @Autowired
-    public AppUserTest(AppUserRepository userRepository, AppUserRepositoryCustom userRepositoryCustom, MealRepository mealRepository) {
+    public AppUserTest(AppUserRepository userRepository, MealRepository mealRepository) {
         this.userRepository = userRepository;
-        this.userRepositoryCustom = userRepositoryCustom;
     }
 
     /*@Test
@@ -97,16 +93,16 @@ public class AppUserTest {
         AppUserRole roleAdmin = new AppUserRole("ADMIN");
         AppUserRole roleUser = new AppUserRole("USER");
         
-        AppUser user1 = new AppUser("IvanAdmin", "ivan1", "pass123", 42, AppUser.Gender.MALE, Set.of(roleAdmin, roleUser), List.of(meal1));
-        AppUser user2 = new AppUser("Ivan", "ivan2", "pass1234", 18, AppUser.Gender.MALE, Set.of(roleUser), List.of(meal2));
-        AppUser user3 = new AppUser("Oleg", "oleg1", "pass12345", 18, AppUser.Gender.MALE, Set.of(roleUser), List.of(meal3));
-        AppUser user4 = new AppUser("Oleg", "oleg2", "pass123456", 53, AppUser.Gender.MALE, Set.of(roleUser), List.of(meal4));
+        AppUser user1 = new AppUser("IvanAdmin", "ivan1", "pass123", 42, AppUser.Gender.MALE, roleAdmin, List.of(meal1));
+        AppUser user2 = new AppUser("Ivan", "ivan2", "pass1234", 18, AppUser.Gender.MALE, roleUser, List.of(meal2));
+        AppUser user3 = new AppUser("Oleg", "oleg1", "pass12345", 18, AppUser.Gender.MALE, roleUser, List.of(meal3));
+        AppUser user4 = new AppUser("Oleg", "oleg2", "pass123456", 53, AppUser.Gender.MALE, roleUser, List.of(meal4));
 
-        roleAdmin.addUser(user1);        
-        roleUser.addUser(user1);
-        roleUser.addUser(user2);
-        roleUser.addUser(user3);
-        roleUser.addUser(user4);        
+//        roleAdmin.addUser(user1);        
+//        roleUser.addUser(user1);
+//        roleUser.addUser(user2);
+//        roleUser.addUser(user3);
+//        roleUser.addUser(user4);        
 
         userRepository.save(user1);
         userRepository.save(user2);

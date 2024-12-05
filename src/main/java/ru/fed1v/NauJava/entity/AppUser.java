@@ -2,12 +2,18 @@ package ru.fed1v.NauJava.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+
+/**
+ * Класс, описывающий пользователя приложения
+ */
 @Entity
 public class AppUser {
 
@@ -15,30 +21,66 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    /**
+     * Имя пользователя
+     */
     private String name;
+
+    /**
+     * Возраст пользователя
+     */
     private Integer age;
 
+    /**
+     * Пол пользователя
+     */
     private Gender gender;
 
+    /**
+     * Рост пользователя в сантиметрах
+     */
+    private Double height;
+
+    /**
+     * Вес пользователя в килограммах
+     */
+    private Double weight;
+
+    /**
+     * Уникальное имя пользователя
+     */
     @Column(unique = true)
     private String username;
 
+    /**
+     * Пароль пользователя
+     */
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Set<AppUserRole> roles = new HashSet<>();
+    /**
+     * Имеет ли пользователь доступ к приложению
+     */
+    private boolean isActive = true;
 
+    /**
+     * Роль пользователя
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private AppUserRole role;
+
+    /**
+     * Приемы пищи пользователя
+     */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Meal> meals;
 
-    public AppUser(String name, String username, String password, Integer age, Gender gender, Set<AppUserRole> roles, List<Meal> meals) {
+    public AppUser(String name, String username, String password, Integer age, Gender gender, AppUserRole role, List<Meal> meals) {
         this.name = name;
         this.age = age;
         this.gender = gender;
-        this.roles = roles;
+        this.role = role;
         this.meals = meals;
         this.username = username;
         this.password = password;
@@ -79,6 +121,22 @@ public class AppUser {
         this.gender = gender;
     }
 
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -95,12 +153,12 @@ public class AppUser {
         this.password = password;
     }
 
-    public Set<AppUserRole> getRoles() {
-        return roles;
+    public AppUserRole getRole() {
+        return role;
     }
 
-    public void setRoles(Set<AppUserRole> roles) {
-        this.roles = roles;
+    public void setRole(AppUserRole role) {
+        this.role = role;
     }
 
     public List<Meal> getMeals() {
@@ -109,6 +167,14 @@ public class AppUser {
 
     public void setMeals(List<Meal> meals) {
         this.meals = meals;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override
@@ -137,14 +203,27 @@ public class AppUser {
                 ", gender=" + gender +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", roles=" + roles +
+                ", role=" + role +
                 ", meals=" + meals +
                 '}';
     }
 
+    /**
+     * Пол пользователя: мужчина, женщина
+     */
     public enum Gender {
-        MALE,
-        FEMALE
+        MALE("Мужчина"),
+        FEMALE("Женщина");
+
+        private final String value;
+
+        Gender(String value) {
+            this.value = value;
+        }
+        
+        public String getValue() {
+            return value;
+        }
     }
 }
 

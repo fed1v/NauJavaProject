@@ -8,6 +8,9 @@ import ru.fed1v.NauJava.repository.food.FoodRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Реализация сервиса для работы с продуктами
+ */
 @Service
 public class FoodServiceImpl implements FoodService {
 

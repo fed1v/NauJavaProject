@@ -39,7 +39,11 @@ public class NutritionalValue {
     @Column
     private Double kcalPer100g;
 
-    @OneToOne(cascade = CascadeType.ALL)
+
+    /**
+     * Продукт, к которому относится пищевая ценность
+     */
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private Food food;
 
@@ -48,7 +52,7 @@ public class NutritionalValue {
         this.proteinPer100g = proteinPer100g;
         this.carbohydratePer100g = carbohydratePer100g;
         this.fatPer100g = fatPer100g;
-        kcalPer100g = 9 * fatPer100g + 4 * proteinPer100g + 4 * carbohydratePer100g;
+        kcalPer100g = calculateKcal();
     }
 
     public NutritionalValue(Long id, double kcalPer100g) {
@@ -93,6 +97,10 @@ public class NutritionalValue {
     }
 
     public Double getKcalPer100g() {
+        if (kcalPer100g == null || kcalPer100g == 0) {
+            kcalPer100g = calculateKcal();
+        }
+
         return kcalPer100g;
     }
 
@@ -108,15 +116,20 @@ public class NutritionalValue {
         this.food = food;
     }
 
+    public double calculateKcal() {
+        this.kcalPer100g = 9 * this.fatPer100g + 4 * this.proteinPer100g + 4 * this.carbohydratePer100g;
+        return this.kcalPer100g;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NutritionalValue that = (NutritionalValue) o;
-        return Objects.equals(id, that.id) 
-                && Objects.equals(proteinPer100g, that.proteinPer100g) 
-                && Objects.equals(carbohydratePer100g, that.carbohydratePer100g) 
-                && Objects.equals(fatPer100g, that.fatPer100g) 
+        return Objects.equals(id, that.id)
+                && Objects.equals(proteinPer100g, that.proteinPer100g)
+                && Objects.equals(carbohydratePer100g, that.carbohydratePer100g)
+                && Objects.equals(fatPer100g, that.fatPer100g)
                 && Objects.equals(kcalPer100g, that.kcalPer100g);
     }
 
@@ -133,7 +146,7 @@ public class NutritionalValue {
                 ", carbohydratePer100g=" + carbohydratePer100g +
                 ", fatPer100g=" + fatPer100g +
                 ", kcalPer100g=" + kcalPer100g +
-                ", food=" + food.getId() +
+                ", food=" + (food != null ? food.getId() : -1) +
                 '}';
     }
 }

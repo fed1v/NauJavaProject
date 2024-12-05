@@ -12,10 +12,20 @@ import ru.fed1v.NauJava.entity.Report;
 import ru.fed1v.NauJava.entity.ReportContent;
 import ru.fed1v.NauJava.service.report.ReportService;
 
+/**
+ * Класс, обрабатывающий запросы, относящиеся к отчету
+ */
 @Controller
 public class ReportController {
 
+    /**
+     * Сервис для работы с отчетами
+     */
     private final ReportService reportService;
+
+    /**
+     * Вспомогательный объект для перевода данных в формат JSON и обратно
+     */
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
@@ -23,6 +33,10 @@ public class ReportController {
         this.reportService = reportService;
     }
 
+    /**
+     * Создает отчет, запускает процесс его формирования и возвращает 
+     * id созданного отчета
+     */
     @GetMapping("/report")
     @ResponseBody
     public String createReport() {
@@ -31,6 +45,11 @@ public class ReportController {
         return "{ id: " + createdReportId + "}";
     }
 
+    /**
+     * Отображает страницу с отчетом по id
+     *
+     * @return имя шаблона, отображающего страницу с отчетом
+     */
     @GetMapping("/report/{id}")
     public String getReportById(
             @PathVariable Long id,

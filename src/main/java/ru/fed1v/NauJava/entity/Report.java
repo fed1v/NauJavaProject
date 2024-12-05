@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
+/**
+ * Класс, описывающий отчет.
+ */
 @Entity
 public class Report {
 
@@ -12,9 +15,15 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    /**
+     * Статус отчета (создан, сформирован, ошибка)
+     */
     @NotNull
     private String status;
 
+    /**
+     * Содержимое отчета
+     */
     @Column(length = 9192)
     private String content;
 
@@ -76,9 +85,23 @@ public class Report {
                 '}';
     }
 
+    /**
+     * Статус отчета
+     */
     public enum Status {
+        /**
+         * Создан, но еще не сформирован
+         */
         CREATED,
+
+        /**
+         * Завершен
+         */
         COMPLETED,
+
+        /**
+         * Ошибка
+         */
         ERROR;
     }
 }

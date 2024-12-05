@@ -8,6 +8,9 @@ import ru.fed1v.NauJava.repository.nutritional_value.NutritionalValueRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Реализация сервиса для работы с пищевой ценностью
+ */
 @Service
 public class NutritionalValueServiceImpl implements NutritionalValueService {
 

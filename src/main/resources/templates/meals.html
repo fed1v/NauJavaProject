@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+
+    <div>
+        <a class="btn btn-primary" href="/meals/create">Добавить прием пищи</a>
+
+        <h1 th:text="'Приемы пищи: ' + ${mealsDto.meals.size()}"/>
+        <h3 th:text="'Белки: ' + ${mealsDto.getTotalProteinGrams()} + ' г'"/>
+        <h3 th:text="'Жиры: ' + ${mealsDto.getTotalFatGrams()} + ' г'"/>
+        <h3 th:text="'Углеводы: ' + ${mealsDto.getTotalCarbohydrate()} + ' г'"/>
+        <h3 th:text="'Килокалории: ' + ${mealsDto.getTotalKcal()}"/>
+    </div>
+
+    <div class="mb-3">
+        <a class="btn btn-outline-primary" href="/meals">Все</a>
+        <a class="btn btn-outline-primary" href="/meals?type=Завтрак">Завтрак</a>
+        <a class="btn btn-outline-primary" href="/meals?type=Обед">Обед</a>
+        <a class="btn btn-outline-primary" href="/meals?type=Ужин">Ужин</a>
+    </div>
+
+    <div class="mb-3">
+        <form
+                th:action="@{/meals}"
+                method="get"
+        >
+
+            <div class="mb-3">
+                <label for="dateStart">От:</label>
+                <input type="datetime-local" id="dateStart" name="dateStart" th:field="${mealsDto.dateStart}"/>
+
+                <label for="dateEnd">До:</label>
+                <input type="datetime-local" id="dateEnd" name="dateEnd" th:field="${mealsDto.dateEnd}"/>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Применить</button>
+            <a class="btn btn-primary" href="/meals">Сбросить фильтры</a>
+
+        </form>
+    </div>
+
+
+    <div class="mb-3">
+
+        <p>Сортировать по: </p>
+
+        <a class="btn btn-outline-primary" href="/meals?sort=protein">Белки</a>
+        <a class="btn btn-outline-primary" href="/meals?sort=fat">Жиры</a>
+        <a class="btn btn-outline-primary" href="/meals?sort=carbohydrate">Углеводы</a>
+        <a class="btn btn-outline-primary" href="/meals?sort=kcal">Килокалории</a>
+
+    </div>
+
+    <form
+            th:action="@{/meals}"
+            method="post"
+    >
+
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+        <button class="btn btn-primary" type="submit">Показать выбранные</button>
+
+        <table class="table">
+
+            <thead>
+            <tr>
+                <th>Выбрать</th>
+                <th>Дата</th>
+                <th>Описание</th>
+                <th>Тип</th>
+                <th>Блюда</th>
+                <th>БЖУ</th>
+                <th>Действие</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="meal: ${mealsDto.meals}">
+
+                <td>
+                    <div>
+                        <label>
+                            <input
+                                    type="checkbox"
+                                    class="meal-checkbox"
+                                    name="checkedIds"
+                                    th:value="${meal.id}"
+                            />
+                        </label>
+                    </div>
+                </td>
+
+                <td th:text="${#temporals.format(meal.dateTime, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${meal.description}"></td>
+                <td th:text="${meal.type.name}"></td>
+                <!--                <td th:text="${meal.getDishes()}"></td>-->
+                <td>
+
+                    <ol>
+                        <li th:each="dish : ${meal.dishes}">
+                            <p th:text="${dish.name} + ' ' + ${dish.gramsWeight} + ' г'"></p>
+                        </li>
+                    </ol>
+
+                </td>
+                <td>
+                    <p th:text="'Белки: ' + ${meal.getTotalProteinGrams()}"></p>
+                    <p th:text="'Жиры: ' + ${meal.getTotalFatGrams()}"></p>
+                    <p th:text="'Углеводы: ' + ${meal.getTotalCarbohydrateGrams()}"></p>
+                    <p th:text="'ККал: ' + ${meal.getTotalKcal()}"></p>
+                </td>
+
+                <td style="white-space: nowrap">
+
+                    <a
+                            class="btn btn-primary btn-primary"
+                            th:href="@{/meals/{id}/edit(id=${meal.id})}"
+                    >
+                        Изменить
+                    </a>
+
+                    <a
+                            class="btn btn-primary btn-danger"
+                            th:href="@{/meals/{id}/delete(id=${meal.id})}"
+                            onclick="return confirm('Вы уверены?')"
+                    >
+                        Удалить
+                    </a>
+
+                </td>
+            </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+    </form>
+
+   
+</div>
+
+<script>
+    function confirmDelete(mealId) {
+        console.log("confirm delete", mealId)
+
+        if (confirm('Вы уверены?')) {
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = '/meals/' + mealId + '/delete';
+
+            // Добавьте CSRF-токен в новую форму
+            const csrfToken = document.querySelector('input[name="${_csrf.parameterName}"]').value;
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '${_csrf.parameterName}';
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

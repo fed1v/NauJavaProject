@@ -1,19 +1,24 @@
 package ru.fed1v.NauJava.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import ru.fed1v.NauJava.entity.AppUser;
 import ru.fed1v.NauJava.service.app_user.AppUserService;
 
 import java.util.List;
 
-@RestController
+/**
+ * Класс, обрабатывающий запросы, относящиеся к пользователям
+ */
+@Controller
 @RequestMapping("/users")
 public class AppUserController {
 
+    /**
+     * Сервис для работы с пользователями
+     */
     private final AppUserService appUserService;
 
     @Autowired
@@ -21,53 +26,96 @@ public class AppUserController {
         this.appUserService = appUserService;
     }
 
+    /**
+     * Метод, ответственный за отображение пользователей
+     *
+     * @param name         имя пользователя
+     * @param age          точный возраст пользователя
+     * @param olderThanAge минимальный возраст пользователя
+     * @return имя шаблона, отображающего пользователей
+     */
     @GetMapping
-    public List<AppUser> getAppUsersByNameAndAge(
+    public String getAppUsersByNameAndAge(
+            Model model,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "age", required = false) Integer age,
             @RequestParam(value = "olderThan", required = false) Integer olderThanAge
     ) {
-        if (olderThanAge != null) {
-            return getUsersOlderThanAge(olderThanAge);
-        }
-
-        if (name == null && age == null) {
-            return getAllUsers();
-        }
-
-        if (age != null && name == null) {
-            return getUsersWithAge(age);
-        }
-
-        if (name != null && age == null) {
-            return getUsersWithName(name);
-        }
-
-        return getUsersWithNameAndAge(name, age);
+        List<AppUser> users = appUserService.findAppUsersByParams(name, age, olderThanAge);
+        model.addAttribute("users", users);
+        return "users";
     }
 
-    private List<AppUser> getUsersWithNameAndAge(String name, Integer age) {
-        return appUserService
-                .findAppUsersByNameAndAge(name, age);
+    /**
+     * Отображает пользователя
+     *
+     * @param id id пользователя, которого нужно показать
+     * @return имя шаблона, отображающего пользователя
+     */
+    @GetMapping("/{id}")
+    public String getUser(
+            Model model,
+            @PathVariable Long id
+    ) {
+        AppUser user = appUserService.findById(id);
+        model.addAttribute("user", user);
+        return "user";
     }
 
-    private List<AppUser> getUsersWithName(String name) {
-        return appUserService
-                .findAppUsersByName(name);
+
+    /**
+     * Удаляет пользователя
+     *
+     * @param id id пользователя, которого нужно удалить
+     * @return перенаправляет на страницу с пользователями
+     */
+    @PostMapping("/{id}/delete")
+    public String deleteUser(
+            @PathVariable Long id
+    ) {
+        appUserService.deleteById(id);
+        return "redirect:/users";
     }
 
-    private List<AppUser> getUsersWithAge(Integer age) {
-        return appUserService
-                .findAppUsersByAge(age);
+    /**
+     * Заблокирует пользователя
+     *
+     * @param id id пользователя, которого нужно заблокировать
+     * @return перенаправляет на страницу с пользователями
+     */
+    @PostMapping("/{id}/ban")
+    public String banUser(
+            @PathVariable Long id
+    ) {
+        appUserService.banById(id);
+        return "redirect:/users";
     }
 
-    private List<AppUser> getAllUsers() {
-        return appUserService
-                .findAll();
+    /**
+     * Разблокирует пользователя
+     *
+     * @param id id пользователя, которого нужно разблокировать
+     * @return перенаправляет на страницу с пользователями
+     */
+    @PostMapping("/{id}/unban")
+    public String unbanUser(
+            @PathVariable Long id
+    ) {
+        appUserService.unbanById(id);
+        return "redirect:/users";
     }
 
-    private List<AppUser> getUsersOlderThanAge(Integer olderThanAge) {
-        return appUserService
-                .findAppUsersOlderThan(olderThanAge);
+    /**
+     * Делает пользователя админом
+     *
+     * @param id id пользователя, которого нужно сделать админом
+     * @return перенаправляет на страницу с пользователями
+     */
+    @PostMapping("/{id}/makeAdmin")
+    public String makeAdmin(
+            @PathVariable Long id
+    ) {
+        appUserService.makeAdminById(id);
+        return "redirect:/users";
     }
 }

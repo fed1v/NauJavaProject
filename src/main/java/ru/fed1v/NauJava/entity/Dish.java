@@ -4,21 +4,45 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+
+/**
+ * Класс, представляющий блюдо. Относится к конкретному приему пищи.
+ * Содержит продукт, его вес и прочее описание.
+ */
 @Entity
 public class Dish {
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
+
+    /**
+     * Название блюда
+     */
     private String name;
+
+
+    /**
+     * Описание блюда
+     */
     private String description;
+
+
+    /**
+     * Вес блюда в граммах
+     */
     private Double gramsWeight;
-    
-    @OneToOne(cascade = CascadeType.ALL)
+
+    /**
+     * Продукт, из которого сделано блюдо
+     */
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Food food;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    /**
+     * Прием пищи, к которому относится блюдо
+     */
+    @ManyToOne
     @JoinColumn(name = "meal_id")
     private Meal meal;
     

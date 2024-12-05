@@ -6,27 +6,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fed1v.NauJava.entity.AppUser;
 import ru.fed1v.NauJava.entity.AppUserRole;
+import ru.fed1v.NauJava.entity.Meal;
 import ru.fed1v.NauJava.repository.app_user.AppUserRepository;
 import ru.fed1v.NauJava.repository.app_user_role.AppUserRoleRepository;
+import ru.fed1v.NauJava.repository.meal.MealRepository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+/**
+ * Реализация сервиса для работы с пользователями
+ */
 @Service
 public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserRepository appUserRepository;
     private final AppUserRoleRepository appUserRoleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MealRepository mealRepository;
 
     @Autowired
-    public AppUserServiceImpl(AppUserRepository appUserRepository, AppUserRoleRepository appUserRoleRepository, PasswordEncoder passwordEncoder) {
+    public AppUserServiceImpl(AppUserRepository appUserRepository, AppUserRoleRepository appUserRoleRepository, PasswordEncoder passwordEncoder, MealRepository mealRepository) {
         this.appUserRepository = appUserRepository;
         this.appUserRoleRepository = appUserRoleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mealRepository = mealRepository;
     }
 
 
@@ -34,6 +39,7 @@ public class AppUserServiceImpl implements AppUserService {
     public List<AppUser> findAll() {
         return StreamSupport
                 .stream(appUserRepository.findAll().spliterator(), false)
+                .sorted(Comparator.comparing(AppUser::getId))
                 .collect(Collectors.toList());
     }
 
@@ -63,9 +69,21 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public List<AppUser> findAppUsersByNameAndAge(String name, int age) {
-        return appUserRepository
-                .findAppUsersByNameAndAge(name, age);
+    public List<AppUser> findAppUsersByParams(String name, Integer age, Integer olderThanAge) {
+        if (olderThanAge != null) {
+            return findAppUsersOlderThan(olderThanAge);
+
+        } else if (name == null && age == null) {
+            return findAll();
+
+        } else if (age != null && name == null) {
+            return findAppUsersByAge(age);
+
+        } else if (name != null && age == null) {
+            return findAppUsersByName(name);
+        }
+
+        return new ArrayList<>();
     }
 
     @Override
@@ -74,33 +92,81 @@ public class AppUserServiceImpl implements AppUserService {
                 .findAppUsersByAgeGreaterThan(age);
     }
 
-    // TODO Спросить про то, как лучше такое реализовывать: при помощи транзакции или cascade-стратегии 
     @Override
     @Transactional
     public void addAppUser(AppUser appUser) {
 
-        // TODO спросить про иерархию ролей
-        appUser.getRoles().add(new AppUserRole("USER"));
-
-        if (appUser.getUsername().toLowerCase().contains("admin")) {
-            appUser.getRoles().add(new AppUserRole("ADMIN"));
+        if (appUserRoleRepository.findByRole("USER").isEmpty()) {
+            appUserRoleRepository.save(new AppUserRole("USER"));
         }
 
-        Set<AppUserRole> rolesToSave = new HashSet<>();
-
-        for (AppUserRole role : appUser.getRoles()) {
-            AppUserRole roleToSave = appUserRoleRepository
-                    .findByRole(role.getRole())
-                    .orElse(role);
-
-            rolesToSave.add(roleToSave);
-            roleToSave.addUser(appUser);
+        if (appUserRoleRepository.findByRole("ADMIN").isEmpty()) {
+            appUserRoleRepository.save(new AppUserRole("ADMIN"));
         }
 
-        appUser.setRoles(rolesToSave);
+        AppUserRole roleUser = appUserRoleRepository.findByRole("USER").get();
+        appUser.setRole(roleUser);
 
         String encodedPassword = passwordEncoder.encode(appUser.getPassword());
         appUser.setPassword(encodedPassword);
+
         appUserRepository.save(appUser);
+    }
+
+    @Override
+    public void saveUser(AppUser appUser) {
+        appUserRepository.save(appUser);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Optional<AppUser> user = appUserRepository.findById(id);
+
+        if (user.isEmpty()) {
+            return;
+        }
+
+        List<Meal> userMeals = mealRepository.findMealsByAppUserId(user.get().getId());
+
+        mealRepository.deleteAll(userMeals);
+        appUserRepository.deleteById(id);
+    }
+
+    @Override
+    public void banById(Long id) {
+        Optional<AppUser> user = appUserRepository.findById(id);
+
+        if (user.isEmpty()) {
+            return;
+        }
+
+        user.get().setActive(false);
+        appUserRepository.save(user.get());
+    }
+
+    @Override
+    public void unbanById(Long id) {
+        Optional<AppUser> user = appUserRepository.findById(id);
+
+        if (user.isEmpty()) {
+            return;
+        }
+
+        user.get().setActive(true);
+        appUserRepository.save(user.get());
+    }
+
+    @Override
+    public void makeAdminById(Long id) {
+        Optional<AppUser> user = appUserRepository.findById(id);
+
+        if (user.isEmpty()) {
+            return;
+        }
+
+        AppUserRole roleAdmin = appUserRoleRepository.findByRole("ADMIN").get();
+        user.get().setRole(roleAdmin);
+
+        appUserRepository.save(user.get());
     }
 }

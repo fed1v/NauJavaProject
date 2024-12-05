@@ -1,12 +1,12 @@
 package ru.fed1v.NauJava.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+/**
+ * Класс, описывающий роль пользователя
+ */
 @Entity
 public class AppUserRole {
     
@@ -14,12 +14,12 @@ public class AppUserRole {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    /**
+     * Роль пользователя
+     */
     @Column(nullable = false, unique = true)
     private String role;
     
-    @ManyToMany
-    @JsonBackReference
-    private List<AppUser> users = new ArrayList<>();
 
     public AppUserRole(String role) {
         this.role = role;
@@ -44,17 +44,6 @@ public class AppUserRole {
         this.role = role;
     }
 
-    public List<AppUser> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<AppUser> users) {
-        this.users = users;
-    }
-    
-    public void addUser(AppUser user) {
-        this.users.add(user);
-    }
 
     @Override
     public boolean equals(Object o) {

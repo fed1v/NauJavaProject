@@ -2,6 +2,9 @@ package ru.fed1v.NauJava.entity;
 
 import java.util.List;
 
+/**
+ * Вспомогательный класс для формирования отчета
+ */
 public class ReportContent {
     private Long usersCount;
     private List<Food> foodList;

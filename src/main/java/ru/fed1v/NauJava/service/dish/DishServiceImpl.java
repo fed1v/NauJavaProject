@@ -8,6 +8,9 @@ import ru.fed1v.NauJava.repository.dish.DishRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Реализация сервиса для работы с блюдами
+ */
 @Service
 public class DishServiceImpl implements DishService {
 

@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * Класс, описывающий продукт, его пищевую ценность
+ */
 @Entity
 public class Food {
 
@@ -12,19 +15,32 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    /**
+     * Название продукта
+     */
     @Column
     private String name;
 
+    /**
+     * Описание продукта
+     */
     @Column
     private String description;
 
+
+    /**
+     * Цена за 100 грамм
+     */
     @Column
     private Double price;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    /**
+     * Пищевая ценность продукта
+     */
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private NutritionalValue nutritionalValue;
-
+    
     public Food(String name, String description, Double price, NutritionalValue nutritionalValue) {
         this.name = name;
         this.description = description;

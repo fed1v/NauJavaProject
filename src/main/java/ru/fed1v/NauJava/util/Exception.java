@@ -1,5 +1,8 @@
 package ru.fed1v.NauJava.util;
 
+/**
+ * Вспомогательный класс для отображения ошибок на странице
+ */
 public class Exception {
 
     private String message;

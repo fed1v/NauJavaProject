@@ -1,5 +1,9 @@
 package ru.fed1v.NauJava.util;
 
+/**
+ * Класс, расширяющий Thread функциональностью замера 
+ * времени работы над задачей и информацией об ошибках
+ */
 public class ThreadWithTime extends Thread {
 
     private long startTime;

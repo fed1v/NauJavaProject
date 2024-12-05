@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.fed1v.NauJava.util.Exception;
 
+/**
+ * Класс, перехватывающий ошибки приложения
+ * и отображающий их сообщение на странице
+ */
 @ControllerAdvice
 public class ExceptionControllerAdvice {
 

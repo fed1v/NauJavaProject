@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Реализация сервиса для работы с отчетами
+ */
 @Service
 public class ReportServiceImpl implements ReportService {
 
@@ -90,14 +93,6 @@ public class ReportServiceImpl implements ReportService {
         ReportContent reportContent = new ReportContent();
 
         ThreadWithTime userCounterThread = new ThreadWithTime("UserCounterThread", () -> {
-            /*try {
-                Thread.sleep(10_000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }*/
-
-//            throw new RuntimeException("Test exception");
-            
             long usersCount = appUserRepository.count();
             reportContent.setUsersCount(usersCount);
         });
